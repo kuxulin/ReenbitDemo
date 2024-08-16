@@ -1,4 +1,7 @@
 
+using Core.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Core;
 
 public class Program
@@ -7,9 +10,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddApplicationServices();
+        builder.Services.AddApplicationRepositories();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddDbContext<ApplicationContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSQLConnectionString")));
 
         var app = builder.Build();
 
