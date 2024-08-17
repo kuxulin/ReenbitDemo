@@ -1,5 +1,6 @@
 
 using Core.Data;
+using Core.Hubs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core;
@@ -13,9 +14,12 @@ public class Program
         builder.Services.AddApplicationServices();
         builder.Services.AddApplicationRepositories();
         builder.Services.AddControllers();
+        builder.Services.AddSignalR();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        
+        builder.Services.AddCors(options => options.AddPolicy("default", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+        
         builder.Services.AddDbContext<ApplicationContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSQLConnectionString")));
 
@@ -28,7 +32,9 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseCors("default");
         app.UseAuthorization();
+        app.MapHub<MessageHub>("/messageHub");
         app.MapControllers();
 
         app.Run();
