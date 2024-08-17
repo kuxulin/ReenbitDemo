@@ -25,7 +25,7 @@ public class UsersService :IUsersService
     {
         var possibleDuplicate = await GetUserAsync(username);
 
-        if (possibleDuplicate == null)
+        if (possibleDuplicate is null)
         {
             var user = new User() { UserName = username };
             await _usersRepository.CreateUserAsync(user);

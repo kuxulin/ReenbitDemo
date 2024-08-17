@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Core.Services.Interfaces;
+using Core.Models;
 
 namespace Core.Controllers;
 [Route("api/[controller]")]
@@ -14,7 +15,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> LogIn(string username)
+    public async Task<ActionResult<User>> LogIn(string username)
     {
         var user = await _usersService.GetUserAsync(username);
 
@@ -27,7 +28,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(string username)
+    public async Task<ActionResult<User>> Register(string username)
     {
         var user = await _usersService.CreateUserAsync(username);
         return Ok(user);
