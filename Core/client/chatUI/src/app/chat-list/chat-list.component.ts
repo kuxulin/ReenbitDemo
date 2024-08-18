@@ -9,10 +9,11 @@ import { ChatsService } from '../services/chats.service';
   styleUrls: ['./chat-list.component.scss'],
 })
 export class ChatListComponent implements OnInit {
-  chats$: Observable<Chat[]>;
+  chats$!: Observable<Chat[]>;
 
   constructor(private chatsService: ChatsService) {}
+
   ngOnInit(): void {
-    this.chats$ = this.chatsService.loadAllChats();
+    this.chats$ = this.chatsService.loadAllUserChats();
   }
 }
