@@ -9,10 +9,12 @@ namespace Core.Services;
 public class ChatsService : IChatsService
 {
     private readonly IChatsRepository _chatRepository;
+    private readonly IUsersService _usersService;
 
-    public ChatsService(IChatsRepository chatRepository)
+    public ChatsService(IChatsRepository chatRepository, IUsersService usersService)
     {
         _chatRepository = chatRepository;
+        _usersService = usersService;
     }
 
     public async Task<IEnumerable<Chat>> GetUserChatsAsync(Guid userId)
@@ -33,6 +35,14 @@ public class ChatsService : IChatsService
 
     public async Task<Chat> GetChatByUserIds(Guid firstUserId, Guid secondUserId)
     {
+        var firstUserTask = _usersService.GetUserByIdAsync(firstUserId);
+        var secondUserTask = _usersService.GetUserByIdAsync(secondUserId);
+
+        await Task.WhenAll(firstUserTask, secondUserTask);
+
+        if(firstUserTask.Result is null ||  secondUserTask.Result is null)
+            throw new Exception("One or both users don`t exist");
+
         return await _chatRepository.GetChats().Where(c => c.FirstUserId == firstUserId && c.SecondUserId == secondUserId
             || c.FirstUserId == secondUserId && c.SecondUserId == firstUserId)
             .FirstOrDefaultAsync();
