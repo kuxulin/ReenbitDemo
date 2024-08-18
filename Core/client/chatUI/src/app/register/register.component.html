@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Register</mat-label>
+      <input matInput placeholder="Print username" [(ngModel)]="username" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-flat-button (click)="register()">Proceed</button>
+    <button mat-flat-button routerLink="/login">Switch to LogIn</button>
+  </mat-dialog-actions>
+</div>

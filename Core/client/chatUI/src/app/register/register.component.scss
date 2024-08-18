@@ -1,0 +1,19 @@
+.container {
+  width: 20%;
+  height: 60%;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+
+  mat-dialog-content {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-dialog-actions {
+    width: 70%;
+    gap: 10%;
+    display: inline-flex;
+  }
+}
