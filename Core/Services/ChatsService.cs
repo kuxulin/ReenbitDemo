@@ -19,13 +19,16 @@ public class ChatsService : IChatsService
 
     public async Task<IEnumerable<Chat>> GetUserChatsAsync(Guid userId)
     {
-        var chats = await _chatRepository.GetChats().Where(c => c.FirstUserId == userId || c.SecondUserId == userId).ToListAsync();
+        var chats = await _chatRepository.GetChats()
+            .Include(c => c.FirstUser)
+            .Include(c => c.SecondUser)
+            .Where(c => c.FirstUserId == userId || c.SecondUserId == userId).ToListAsync();
         return chats;
     }
 
     public async Task<Chat> GetChatByIdAsync(Guid chatId)
     {
-        var chat = await _chatRepository.GetChats().Where(c => c.Id == chatId).FirstOrDefaultAsync();
+        var chat = await _chatRepository.GetChatByIdAsync(chatId);
 
         if (chat is null)
             throw new Exception();
@@ -33,31 +36,30 @@ public class ChatsService : IChatsService
         return chat;
     }
 
-    public async Task<Chat> GetChatByUserIds(Guid firstUserId, Guid secondUserId)
+    public async Task<Chat> GetChatByUserNames(string firstUserName, string secondUserName)
     {
-        var firstUserTask = _usersService.GetUserByIdAsync(firstUserId);
-        var secondUserTask = _usersService.GetUserByIdAsync(secondUserId);
-
-        await Task.WhenAll(firstUserTask, secondUserTask);
-
-        if(firstUserTask.Result is null ||  secondUserTask.Result is null)
-            throw new Exception("One or both users don`t exist");
-
-        return await _chatRepository.GetChats().Where(c => c.FirstUserId == firstUserId && c.SecondUserId == secondUserId
-            || c.FirstUserId == secondUserId && c.SecondUserId == firstUserId)
+        var chat = await _chatRepository.GetChats()
+            .Include(c => c.Messages)
+            .Where(c => c.FirstUser.UserName == firstUserName && c.SecondUser.UserName == secondUserName
+            || c.FirstUser.UserName == secondUserName && c.SecondUser.UserName == firstUserName)
             .FirstOrDefaultAsync();
+        
+        return chat;
     }
 
     public async Task<Chat> AddMessageToChatAsync(SendMessageDTO messageDTO)
     {
         var chat = await GetChatByUserNames(messageDTO.FromUserName, messageDTO.ToUserName);
 
+        var firstUser = await _usersService.GetUserAsync(messageDTO.FromUserName);
+        var secondUser = await _usersService.GetUserAsync(messageDTO.ToUserName);
+
         if (chat is null)
-            chat = await _chatRepository.CreateChatAsync(messageDTO.FromUserId, messageDTO.ToUserId);
+            chat = await _chatRepository.CreateChatAsync(firstUser,secondUser);
 
         var message = new Message()
         {
-            AuthorId = messageDTO.FromUserId,
+            AuthorId = firstUser.Id,
             ChatId = chat.Id,
             Text = messageDTO.Text,
         };
