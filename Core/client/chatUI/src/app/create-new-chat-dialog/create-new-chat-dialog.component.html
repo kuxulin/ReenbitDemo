@@ -1,0 +1,18 @@
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>To:</mat-label>
+    <input
+      matInput
+      placeholder="Print username"
+      [(ngModel)]="receiverUserName"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Text:</mat-label>
+    <input matInput placeholder="Print text" [(ngModel)]="messageText" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button (click)="sendMessage()">Proceed</button>
+</mat-dialog-actions>
