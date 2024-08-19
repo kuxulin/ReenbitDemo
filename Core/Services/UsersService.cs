@@ -21,13 +21,6 @@ public class UsersService :IUsersService
             .SingleOrDefaultAsync();
     }
 
-    public async Task<User> GetUserByIdAsync(Guid id)
-    {
-        return await _usersRepository.GetUsers()
-            .Where(u => u.Id == id)
-            .SingleOrDefaultAsync();
-    }
-
     public async Task<User> CreateUserAsync(string username)
     {
         var possibleDuplicate = await GetUserAsync(username);
