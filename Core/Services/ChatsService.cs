@@ -50,7 +50,7 @@ public class ChatsService : IChatsService
 
     public async Task<Chat> AddMessageToChatAsync(SendMessageDTO messageDTO)
     {
-        var chat = await GetChatByUserIds(messageDTO.FromUserId, messageDTO.ToUserId);
+        var chat = await GetChatByUserNames(messageDTO.FromUserName, messageDTO.ToUserName);
 
         if (chat is null)
             chat = await _chatRepository.CreateChatAsync(messageDTO.FromUserId, messageDTO.ToUserId);
