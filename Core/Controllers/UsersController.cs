@@ -14,7 +14,7 @@ public class UsersController : ControllerBase
         _usersService = usersService;
     }
 
-    [HttpGet]
+    [HttpGet("login")]
     public async Task<ActionResult<User>> LogIn(string username)
     {
         var user = await _usersService.GetUserAsync(username);
@@ -27,7 +27,7 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<User>> Register(string username)
     {
         var user = await _usersService.CreateUserAsync(username);
