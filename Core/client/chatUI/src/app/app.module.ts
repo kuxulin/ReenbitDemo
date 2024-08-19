@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
+import { MatIconModule } from '@angular/material/icon';
+import { CreateNewChatDialogComponent } from './create-new-chat-dialog/create-new-chat-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { RegisterComponent } from './register/register.component';
     ChatComponent,
     LoginComponent,
     RegisterComponent,
+    CreateNewChatDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,8 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     HttpClientModule,
     MatInputModule,
+    MatDialogModule,
+    MatIconModule,
     MatDialogModule,
   ],
   providers: [],

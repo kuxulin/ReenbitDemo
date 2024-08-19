@@ -44,16 +44,16 @@ export class UsersService {
       );
   }
 
-  getUser(): User {
+  getCurrentUser(): User {
     let user: User = {
       id: localStorage.getItem('userId') || '',
-      name: localStorage.getItem('username') || '',
+      userName: localStorage.getItem('username') || '',
     };
     return user;
   }
 
   private setUser(user: User) {
-    localStorage.setItem('username', user.name);
+    localStorage.setItem('username', user.userName);
     localStorage.setItem('userId', user.id);
   }
 }
