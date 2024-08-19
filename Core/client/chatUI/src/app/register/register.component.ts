@@ -11,6 +11,8 @@ export class RegisterComponent {
   username = '';
   constructor(private usersService: UsersService, private router: Router) {}
   register() {
+    if (!this.username) return;
+
     this.usersService.register(this.username).subscribe(() => {
       this.router.navigateByUrl('chats');
     });

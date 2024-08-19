@@ -6,7 +6,9 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-flat-button (click)="logIn()">Proceed</button>
+    <button mat-flat-button (click)="logIn()" disabled="{{ !username }}">
+      Proceed
+    </button>
     <button mat-flat-button routerLink="/register">Switch to Register</button>
   </mat-dialog-actions>
 </div>

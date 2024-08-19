@@ -11,6 +11,8 @@ export class LoginComponent {
   username = '';
   constructor(private usersService: UsersService, private router: Router) {}
   logIn() {
+    if (!this.username) return;
+
     this.usersService.logIn(this.username).subscribe(() => {
       this.router.navigateByUrl('chats');
     });
