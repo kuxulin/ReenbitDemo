@@ -1,1 +1,5 @@
-<p>chat works!</p>
+<mat-list>
+  <mat-list-item *ngFor="let message of (chat$ | async)?.messages">
+    {{ message.text }}
+  </mat-list-item>
+</mat-list>
