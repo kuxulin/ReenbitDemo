@@ -1,7 +1,7 @@
-
 using Core.Data;
 using Core.Hubs;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace Core;
 
@@ -13,13 +13,14 @@ public class Program
 
         builder.Services.AddApplicationServices();
         builder.Services.AddApplicationRepositories();
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+               .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         builder.Services.AddSignalR();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+
         builder.Services.AddCors(options => options.AddPolicy("default", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-        
+
         builder.Services.AddDbContext<ApplicationContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSQLConnectionString")));
 
