@@ -1,5 +1,18 @@
-<mat-list>
-  <mat-list-item *ngFor="let message of (chat$ | async)?.messages">
-    {{ message.text }}
-  </mat-list-item>
-</mat-list>
+<ng-container *ngIf="chat$ | async as chat">
+  <mat-list>
+    <mat-list-item *ngFor="let message of chat.messages">
+      {{ message.text }}
+    </mat-list-item>
+    <mat-form-field appearance="outline">
+      <mat-label>Send message</mat-label>
+      <input matInput placeholder="Print something" [(ngModel)]="messageText" />
+    </mat-form-field>
+    <button
+      mat-flat-button
+      (click)="sendMessage(chat.firstUserName, chat.secondUserName)"
+      disabled="{{ !messageText }}"
+    >
+      Send
+    </button>
+  </mat-list></ng-container
+>

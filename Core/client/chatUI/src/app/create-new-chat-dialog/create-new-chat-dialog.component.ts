@@ -14,13 +14,19 @@ export class CreateNewChatDialogComponent {
 
   constructor(
     private dialogRef: DialogRef<CreateNewChatDialogComponent>,
-    private chatsService: ChatsService
+    private chatsService: ChatsService,
+    private usersService: UsersService
   ) {}
   sendMessage() {
     if (!this.receiverUserName || !this.messageText) return;
 
+    let user = this.usersService.getCurrentUser();
     this.chatsService
-      .addNewMessageToChat(this.receiverUserName, this.messageText)
+      .addNewMessageToChat(
+        user.userName,
+        this.receiverUserName,
+        this.messageText
+      )
       .subscribe(() => {
         this.dialogRef.close();
       });

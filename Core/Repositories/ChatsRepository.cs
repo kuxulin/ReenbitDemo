@@ -22,6 +22,8 @@ public class ChatsRepository :IChatsRepository
     public async Task<Chat> GetChatByIdAsync(Guid chatId)
     {
         return await GetChats()
+            .Include(c=> c.FirstUser)
+            .Include(c=> c.SecondUser)
             .Include(c => c.Messages)
             .Where(c => c.Id == chatId).FirstOrDefaultAsync();
     }

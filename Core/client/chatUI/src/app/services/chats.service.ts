@@ -22,16 +22,19 @@ export class ChatsService {
 
   loadAllUserChats(): Observable<Chat[]> {
     let user = this.usersService.getCurrentUser();
+    return this.http.get<Chat[]>(`${environment.apiUrl}/chats/${user.id}`);
   }
 
-  addNewMessageToChat(receiverName: string, messageText: string) {
-    let user = this.usersService.getCurrentUser();
-
+  addNewMessageToChat(
+    authorName: string,
+    receiverName: string,
+    messageText: string
+  ) {
     return this.http
       .put<Chat>(`${environment.apiUrl}/chats`, {
         text: messageText,
         toUserName: receiverName,
-        fromUserName: user.userName,
+        fromUserName: authorName,
       })
       .pipe(take(1));
   }
