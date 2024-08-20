@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CreateNewChatDialogComponent } from './create-new-chat-dialog/create-new-chat-dialog.component';
+import { MessagesSortPipe } from './pipes/messages-sort.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateNewChatDialogComponent } from './create-new-chat-dialog/create-ne
     LoginComponent,
     RegisterComponent,
     CreateNewChatDialogComponent,
+    MessagesSortPipe,
   ],
   imports: [
     BrowserModule,
