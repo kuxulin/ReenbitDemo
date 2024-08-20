@@ -4,5 +4,6 @@ export const environment = {
   newChatCreated: 'newChatCreated',
   newMessageSent: 'newMessageSent',
   sendMessage: 'SendMessage',
+  createChat: 'CreateChat',
   logInHub: 'LogInHub',
 };

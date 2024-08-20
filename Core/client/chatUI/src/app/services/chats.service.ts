@@ -43,14 +43,6 @@ export class ChatsService {
         toUserName: receiverName,
         fromUserName: authorName,
       })
-      .pipe(
-        take(1),
-        tap(async () => {
-          await this.hubConnection.invokeMessageReceiveing(
-            authorName,
-            receiverName
-          );
-        })
-      );
+      .pipe(take(1));
   }
 }

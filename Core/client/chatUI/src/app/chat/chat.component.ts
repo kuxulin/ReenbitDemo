@@ -5,6 +5,7 @@ import { ChatsService } from '../services/chats.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { HubConnectionService } from '../services/hub-connection.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-chat',
@@ -27,9 +28,11 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadChat();
 
-    this.hubSubscription = this.hubConnection.receiveMessage().subscribe(() => {
-      this.loadChat();
-    });
+    this.hubSubscription = this.hubConnection
+      .listenToHub(environment.newMessageSent)
+      .subscribe(() => {
+        this.loadChat();
+      });
   }
 
   loadChat() {
@@ -42,7 +45,14 @@ export class ChatComponent implements OnInit, OnDestroy {
       user.userName === firstUserName ? secondUserName : firstUserName;
     this.chatsService
       .addNewMessageToChat(user.userName, receiverName, this.messageText)
-      .subscribe(() => (this.messageText = ''));
+      .subscribe(async () => {
+        await this.hubConnection.invokeHubFunction(
+          environment.sendMessage,
+          user.userName,
+          receiverName
+        );
+        this.messageText = '';
+      });
   }
 
   ngOnDestroy(): void {

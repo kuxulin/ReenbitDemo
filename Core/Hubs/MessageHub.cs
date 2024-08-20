@@ -10,8 +10,9 @@ public class MessageHub : Hub
 
     public async Task CreateChat(string fromUserName, string toUserName)
     {
-        await Clients.Users(fromUserName, toUserName)
-            .SendAsync("newChatCreated");
+        _connectionIds.TryGetValue(fromUserName, out string fromUserId);
+        _connectionIds.TryGetValue(toUserName, out string toUserid);
+        await Clients.Users(fromUserId, toUserid).SendAsync("newChatCreated");
     }
 
     public async Task SendMessage(string fromUserName, string toUserName)
@@ -26,13 +27,4 @@ public class MessageHub : Hub
         var id = Context.ConnectionId;
         _connectionIds.TryAdd(username, id);
     }
-
-    //public override Task OnDisconnected(bool stopCalled)
-    //{
-    //    string name = Context.User.Identity.Name;
-
-    //    _connections.Remove(name, Context.ConnectionId);
-
-    //    return base.OnDisconnected(stopCalled);
-    //}
 }
