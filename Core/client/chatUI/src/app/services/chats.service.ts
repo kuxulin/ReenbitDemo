@@ -4,15 +4,20 @@ import { map, Observable, take, tap } from 'rxjs';
 import Chat from '../models/Chat';
 import { environment } from 'src/environments/environment.development';
 import { UsersService } from './users.service';
+import { HubConnectionService } from './hub-connection.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
-  constructor(private http: HttpClient, private usersService: UsersService) {}
+  constructor(
+    private http: HttpClient,
+    private usersService: UsersService,
+    private hubConnection: HubConnectionService
+  ) {}
 
   getChatById(chatId: string) {
     return this.http
-      .get<Chat>(`${environment.apiUrl}/chats`, {
+      .get<Chat>(`${environment.serverUrl}/api/chats`, {
         params: {
           chatId,
         },
@@ -22,7 +27,9 @@ export class ChatsService {
 
   loadAllUserChats(): Observable<Chat[]> {
     let user = this.usersService.getCurrentUser();
-    return this.http.get<Chat[]>(`${environment.apiUrl}/chats/${user.id}`);
+    return this.http.get<Chat[]>(
+      `${environment.serverUrl}/api/chats/${user.id}`
+    );
   }
 
   addNewMessageToChat(
@@ -31,11 +38,19 @@ export class ChatsService {
     messageText: string
   ) {
     return this.http
-      .put<Chat>(`${environment.apiUrl}/chats`, {
+      .put<Chat>(`${environment.serverUrl}/api/chats`, {
         text: messageText,
         toUserName: receiverName,
         fromUserName: authorName,
       })
-      .pipe(take(1));
+      .pipe(
+        take(1),
+        tap(async () => {
+          await this.hubConnection.invokeMessageReceiveing(
+            authorName,
+            receiverName
+          );
+        })
+      );
   }
 }

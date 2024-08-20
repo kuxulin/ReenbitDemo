@@ -1,4 +1,8 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:7284/api',
+  serverUrl: 'https://localhost:7284',
+  newChatCreated: 'newChatCreated',
+  newMessageSent: 'newMessageSent',
+  sendMessage: 'SendMessage',
+  logInHub: 'LogInHub',
 };

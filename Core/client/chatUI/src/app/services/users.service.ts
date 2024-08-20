@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import User from '../models/User';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import Chat from '../models/Chat';
-import { map, Observable, pipe, take, tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +11,7 @@ export class UsersService {
 
   logIn(username: string) {
     return this.http
-      .get<User>(`${environment.apiUrl}/users/login`, {
+      .get<User>(`${environment.serverUrl}/api/users/login`, {
         params: {
           username,
         },
@@ -28,7 +27,7 @@ export class UsersService {
   register(username: string) {
     return this.http
       .post<User>(
-        `${environment.apiUrl}/users/register`,
+        `${environment.serverUrl}/api/users/register`,
         {},
         {
           params: {
