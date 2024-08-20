@@ -17,7 +17,7 @@ public class Program
         builder.Services.AddControllers()
                .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         builder.Services.AddMappers();
-        builder.Services.AddSignalR();
+        builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration.GetConnectionString("AzureSignalRConnectionString"));
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 

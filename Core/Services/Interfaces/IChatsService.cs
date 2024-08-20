@@ -1,7 +1,5 @@
-﻿using Core.Models;
-using Core.Models.DTOs;
+﻿using Core.Models.DTOs;
 using Core.Models.ViewModels;
-using System.Threading.Tasks;
 
 namespace Core.Services.Interfaces;
 

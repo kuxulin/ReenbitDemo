@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, take, tap } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import Chat from '../models/Chat';
 import { environment } from 'src/environments/environment.development';
 import { UsersService } from './users.service';
-import { HubConnectionService } from './hub-connection.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
-  constructor(
-    private http: HttpClient,
-    private usersService: UsersService,
-    private hubConnection: HubConnectionService
-  ) {}
+  constructor(private http: HttpClient, private usersService: UsersService) {}
 
   getChatById(chatId: string) {
-    return this.http
-      .get<Chat>(`${environment.serverUrl}/api/chats`, {
-        params: {
-          chatId,
-        },
-      })
-      .pipe(tap((res) => console.log(res)));
+    return this.http.get<Chat>(`${environment.serverUrl}/api/chats`, {
+      params: {
+        chatId,
+      },
+    });
   }
 
   loadAllUserChats(): Observable<Chat[]> {

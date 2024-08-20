@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import Chat from '../models/Chat';
 import { ChatsService } from '../services/chats.service';
 import { CreateNewChatDialogComponent } from '../create-new-chat-dialog/create-new-chat-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from '../services/users.service';
 import { HubConnectionService } from '../services/hub-connection.service';
 import { environment } from 'src/environments/environment.development';

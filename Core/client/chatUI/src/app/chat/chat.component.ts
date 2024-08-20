@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import Chat from '../models/Chat';
 import { ChatsService } from '../services/chats.service';
-import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { HubConnectionService } from '../services/hub-connection.service';
 import { environment } from 'src/environments/environment.development';

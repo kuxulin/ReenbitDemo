@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using Core.Models.DTOs;
+﻿using Core.Models.DTOs;
 using Core.Models.ViewModels;
 using Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

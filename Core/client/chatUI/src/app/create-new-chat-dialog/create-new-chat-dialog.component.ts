@@ -1,5 +1,5 @@
 import { DialogRef } from '@angular/cdk/dialog';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChatsService } from '../services/chats.service';
 import { UsersService } from '../services/users.service';
 import { HubConnectionService } from '../services/hub-connection.service';
