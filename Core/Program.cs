@@ -1,4 +1,5 @@
 using Core.Data;
+using Core.Extensions;
 using Core.Hubs;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -15,6 +16,7 @@ public class Program
         builder.Services.AddApplicationRepositories();
         builder.Services.AddControllers()
                .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        builder.Services.AddMappers();
         builder.Services.AddSignalR();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

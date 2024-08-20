@@ -1,13 +1,13 @@
 ﻿using Core.Models;
 using Core.Models.DTOs;
+using Core.Models.ViewModels;
 using System.Threading.Tasks;
 
 namespace Core.Services.Interfaces;
 
 public interface IChatsService
 {
-    Task<IEnumerable<Chat>> GetUserChatsAsync(Guid userId);
-    Task<Chat> GetChatByIdAsync(Guid chatId);
-    Task<Chat> GetChatByUserNames(string firstUserName, string secondUserName);
-    Task<Chat> AddMessageToChatAsync(SendMessageDTO messageDTO);
+    Task<IEnumerable<ChatGetViewModel>> GetUserChatsAsync(Guid userId);
+    Task<ChatGetViewModel> GetChatByIdAsync(Guid chatId);
+    Task<ChatGetViewModel> AddMessageToChatAsync(SendMessageDTO messageDTO);
 }

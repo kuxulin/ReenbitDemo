@@ -22,17 +22,6 @@ export class ChatsService {
 
   loadAllUserChats(): Observable<Chat[]> {
     let user = this.usersService.getCurrentUser();
-    return this.http.get<Chat[]>(`${environment.apiUrl}/chats/${user.id}`).pipe(
-      map((res: any) =>
-        res.map((chatDTO: any) => {
-          return {
-            id: chatDTO.id,
-            firstUserName: chatDTO.firstUser.userName,
-            secondUserName: chatDTO.secondUser.userName,
-          };
-        })
-      )
-    );
   }
 
   addNewMessageToChat(receiverName: string, messageText: string) {

@@ -1,9 +1,10 @@
-﻿using Core.Repositories;
+﻿using AutoMapper;
+using Core.Repositories;
 using Core.Repositories.Interfaces;
 using Core.Services;
 using Core.Services.Interfaces;
 
-namespace Core;
+namespace Core.Extensions;
 
 public static class ProgramExtensions
 {
@@ -17,5 +18,16 @@ public static class ProgramExtensions
     {
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IChatsRepository, ChatsRepository>();
+    }
+
+    public static void AddMappers(this IServiceCollection services)
+    {
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile<MappingProfile>();
+        });
+
+        var mapper = mapperConfig.CreateMapper();
+        services.AddSingleton(mapper);
     }
 }
