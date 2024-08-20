@@ -3,7 +3,10 @@
     <mat-list-item
       *ngFor="let chat of chats$ | async"
       routerLink="/chats/{{ chat.id }}"
-      >"chat with {{ chat.secondUserName }}"</mat-list-item
+      >"chat with
+      {{
+        showInterlocutorName(chat.firstUserName, chat.secondUserName)
+      }}"</mat-list-item
     >
   </mat-list>
   <button
@@ -14,4 +17,3 @@
     <mat-icon>add</mat-icon>
   </button>
 </div>
-<app-chat></app-chat>
